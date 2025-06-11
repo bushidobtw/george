@@ -1,0 +1,28 @@
+<!-- templates/dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <title>Dashboard</title>
+</head>
+<body>
+  <h2>Welcome {{ user.username }}!</h2>
+
+  <h3>📢 Director's Board</h3>
+  <div class="board">
+    {% for msg in director_board %}
+      <p>{{ msg }}</p>
+    {% endfor %}
+  </div>
+
+  {% if role == 'student' %}
+    <a href="#">👩‍🏫 Teacher Notices</a><br>
+    <a href="#">💬 Personal Chat</a>
+  {% elif role == 'teacher' %}
+    <a href="#">✏️ Notify My Class</a><br>
+    <a href="#">💬 Student Chats</a>
+  {% endif %}
+
+  <br><a href="{{ url_for('logout') }}">Logout</a>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chats</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <h1>Chats ({{ user.username }} - {{ user.role }})</h1>
+
+    {% if user.role == 'teacher' %}
+        <p>Choose student and enter chat:</p>
+        <ul>
+            {% for chat_user in chat_users %}
+                <li>
+                    {{ chat_user.username }} ({{ chat_user.class_name }})
+                    <form method="GET" action="/chat_with_user/{{ chat_user.id }}">
+                        <button type="submit">Go to chat</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% elif user.role == 'student' %}
+        <p>Your teacher:</p>
+        <ul>
+            {% for chat_user in chat_users %}
+                <li>
+                    {{ chat_user.username }} ({{ chat_user.class_name }})
+                    <form method="GET" action="/chat_with_user/{{ chat_user.id }}">
+                        <button type="submit">Go to chat</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Director doesn't have access to chats.</p>
+    {% endif %}
+
+    <form action="/">
+        <button type="submit">Director board</button>
+    </form>
+
+</body>
+</html>

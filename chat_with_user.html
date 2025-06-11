@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat with {{ chat_partner.username }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <h1>Chat with {{ chat_partner.username }}</h1>
+
+    <ul>
+        {% for msg in messages %}
+            <li>
+                {% if msg.sender_id == user.id %}
+                    <strong>You:</strong> {{ msg.message }} ({{ msg.timestamp.strftime('%Y-%m-%d %H:%M') }})
+                {% else %}
+                    <strong>{{ chat_partner.username }}:</strong> {{ msg.message }} ({{ msg.timestamp.strftime('%Y-%m-%d %H:%M') }})
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <form method="POST" action="/send_chat_message">
+        <input type="hidden" name="receiver_id" value="{{ chat_partner.id }}">
+        <textarea name="message" placeholder="Enter your message:"></textarea>
+        <button type="submit">Send</button>
+    </form>
+
+    <form action="/chats">
+        <button type="submit">Chats</button>
+    </form>
+
+</body>
+</html>

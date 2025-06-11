@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teacher board</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <h1>Teacher board for class: {{ user.class_name }} ({{ user.username }} - {{ user.role }})</h1>
+
+    <ul>
+        {% for msg in teacher_messages %}
+            <li><strong>{{ msg.timestamp.strftime('%Y-%m-%d %H:%M') }}</strong>: {{ msg.message }}</li>
+        {% endfor %}
+    </ul>
+
+    {% if user.role == 'teacher' %}
+        <form method="POST" action="/post_teacher_message">
+            <textarea name="message" placeholder="Enter message for your class:"></textarea>
+            <button type="submit">Send</button>
+        </form>
+    {% endif %}
+
+    <form action="/">
+        <button type="submit">Director board</button>
+    </form>
+
+    <form action="/chats">
+        <button type="submit">Chats</button>
+    </form>
+
+    <form action="{{ url_for('logout') }}">
+        <button type="submit">Logout</button>
+    </form>
+
+</body>
+</html>
